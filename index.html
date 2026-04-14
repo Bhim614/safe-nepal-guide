@@ -1,233 +1,986 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marathon Gas Station | Grove City</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marathon Gas Station | Grove City, OH</title>
+  <meta name="description" content="Marathon Gas Station at 4441 Broadway, Grove City, OH 43123. Fuel, snacks, drinks, ATM, lottery, and convenience items with fast customer service." />
 
-<style>
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+  <style>
+    :root{
+      --bg:#050816;
+      --bg2:#0b1022;
+      --card:rgba(255,255,255,.08);
+      --card2:rgba(255,255,255,.12);
+      --line:rgba(255,255,255,.12);
+      --text:#f5f7ff;
+      --muted:#b8c0d9;
+      --accent:#ff5b57;
+      --accent2:#ff9b3d;
+      --accent3:#7c5cff;
+      --shadow:0 24px 70px rgba(0,0,0,.35);
+      --radius:24px;
+      --max:1200px;
+    }
 
-body {
-  background: #020617;
-  color: white;
-}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at top, rgba(124,92,255,.18), transparent 28%),
+        radial-gradient(circle at right, rgba(255,155,61,.14), transparent 24%),
+        linear-gradient(180deg, #030615 0%, #050816 38%, #070b18 100%);
+      color:var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
 
-/* NAVBAR */
-header {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(15px);
-  display: flex;
-  justify-content: space-between;
-  padding: 15px 40px;
-  z-index: 1000;
-}
+    .container{
+      width:min(calc(100% - 32px), var(--max));
+      margin:0 auto;
+    }
 
-header h2 {
-  color: orange;
-}
+    .header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:50;
+      backdrop-filter: blur(18px);
+      background: rgba(3,6,21,.62);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      min-height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+    .brand-mark{
+      width:46px;height:46px;
+      border-radius:16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 30px rgba(255,91,87,.28);
+      display:grid;place-items:center;
+      flex:0 0 auto;
+    }
+    .brand-mark span{
+      font-weight:900;
+      font-size:1.05rem;
+      color:white;
+      line-height:1;
+    }
+    .brand-copy{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+      min-width:0;
+    }
+    .brand-copy strong{
+      font-size:1rem;
+      letter-spacing:.02em;
+      white-space:nowrap;
+    }
+    .brand-copy small{
+      color:var(--muted);
+      font-size:.78rem;
+      white-space:nowrap;
+    }
 
-nav a {
-  margin: 0 15px;
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-}
+    .menu-btn{
+      display:none;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      border-radius:14px;
+      padding:10px 14px;
+      font-size:1.1rem;
+    }
 
-/* HERO */
-.hero {
-  height: 100vh;
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-              url('hero-station.jpg') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
-}
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:24px;
+    }
+    .nav-links a{
+      color:var(--muted);
+      font-weight:600;
+      transition:.2s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.active{
+      color:white;
+    }
 
-.hero h1 {
-  font-size: 50px;
-  margin-bottom: 15px;
-}
+    .hero{
+      position:relative;
+      min-height:100svh;
+      display:flex;
+      align-items:center;
+      padding:116px 0 48px;
+      background:
+        linear-gradient(180deg, rgba(3,6,21,.22), rgba(3,6,21,.76)),
+        url('hero-station.jpg') center/cover no-repeat;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.10), transparent 24%),
+        linear-gradient(90deg, rgba(3,6,21,.70) 0%, rgba(3,6,21,.28) 45%, rgba(3,6,21,.72) 100%);
+      pointer-events:none;
+    }
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns: 1.18fr .82fr;
+      gap:26px;
+      align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.13);
+      color:#ffe9e4;
+      font-size:.84rem;
+      font-weight:700;
+      letter-spacing:.02em;
+      box-shadow: var(--shadow);
+    }
+    .hero h1{
+      margin:18px 0 14px;
+      font-size:clamp(2.9rem, 7vw, 5.6rem);
+      line-height:.94;
+      letter-spacing:-.04em;
+      max-width:10ch;
+      text-wrap:balance;
+    }
+    .hero p.lead{
+      margin:0;
+      max-width:58ch;
+      color:var(--muted);
+      line-height:1.75;
+      font-size:1.05rem;
+    }
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:28px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      border-radius:16px;
+      padding:14px 20px;
+      font-weight:800;
+      border:1px solid transparent;
+      transition:.22s ease;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    }
+    .btn:hover{transform:translateY(-1px);filter:saturate(1.05)}
+    .btn.primary{
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:white;
+    }
+    .btn.secondary{
+      background:rgba(255,255,255,.10);
+      border-color:rgba(255,255,255,.14);
+      color:var(--text);
+    }
 
-.hero p {
-  margin-bottom: 20px;
-  opacity: 0.8;
-}
+    .hero-info{
+      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08));
+      border:1px solid rgba(255,255,255,.15);
+      border-radius:28px;
+      padding:22px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .hero-info-top{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    .mini-card{
+      background:rgba(5,8,22,.40);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;
+      padding:16px;
+    }
+    .mini-card span{
+      display:block;
+      color:var(--muted);
+      font-size:.84rem;
+      margin-bottom:6px;
+    }
+    .mini-card strong{
+      font-size:1rem;
+      line-height:1.35;
+    }
+    .hero-info .note{
+      margin-top:16px;
+      color:var(--muted);
+      font-size:.95rem;
+      line-height:1.65;
+    }
 
-.btn {
-  background: linear-gradient(45deg, red, orange);
-  padding: 12px 25px;
-  border-radius: 25px;
-  color: white;
-  text-decoration: none;
-  margin: 10px;
-  display: inline-block;
-  transition: 0.3s;
-}
+    .hero-badges{
+      position:absolute;
+      left:0;
+      bottom:18px;
+      z-index:1;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      padding-left:0;
+      margin:0;
+      list-style:none;
+    }
+    .hero-badges li{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(5,8,22,.54);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(12px);
+      color:#f3f6ff;
+      font-size:.88rem;
+      font-weight:700;
+      box-shadow:var(--shadow);
+    }
 
-.btn:hover {
-  box-shadow: 0 0 20px red;
-}
+    .section{
+      padding:88px 0;
+      position:relative;
+    }
+    .section.alt{
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.04));
+      border-top:1px solid rgba(255,255,255,.05);
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+    .section-head{
+      max-width:760px;
+      margin:0 auto 28px;
+      text-align:center;
+    }
+    .section-head h2{
+      margin:14px 0 10px;
+      font-size:clamp(1.9rem, 4vw, 3.1rem);
+      letter-spacing:-.04em;
+      line-height:1.02;
+    }
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.75;
+    }
 
-/* TRUST */
-.trust {
-  margin-top: 20px;
-  font-size: 14px;
-  opacity: 0.7;
-}
+    .grid{
+      display:grid;
+      gap:18px;
+    }
+    .grid.four{
+      grid-template-columns:repeat(4, 1fr);
+    }
+    .grid.three{
+      grid-template-columns:repeat(3, 1fr);
+    }
+    .grid.two{
+      grid-template-columns:repeat(2, 1fr);
+    }
 
-/* SECTION */
-section {
-  padding: 100px 20px;
-  text-align: center;
-}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(14px);
+      transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .card:hover{
+      transform:translateY(-6px);
+      border-color:rgba(255,255,255,.22);
+      box-shadow:0 26px 70px rgba(0,0,0,.42);
+    }
+    .card .icon{
+      width:52px;height:52px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(255,91,87,.24), rgba(255,155,61,.24));
+      border:1px solid rgba(255,255,255,.12);
+      margin-bottom:14px;
+      font-size:1.35rem;
+    }
+    .card h3{
+      margin:0 0 8px;
+      font-size:1.08rem;
+    }
+    .card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:.95rem;
+    }
 
-/* CARDS */
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
+    .highlight-strip{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+      margin-top:24px;
+    }
+    .highlight{
+      padding:18px 20px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:20px;
+      color:var(--muted);
+      box-shadow:var(--shadow);
+    }
+    .highlight strong{
+      display:block;
+      color:var(--text);
+      margin-bottom:6px;
+      font-size:1rem;
+    }
 
-.card {
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 15px;
-  width: 250px;
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
-}
+    .amenities{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:16px;
+    }
+    .amenity{
+      padding:20px;
+      border-radius:22px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow);
+      min-height:142px;
+    }
+    .amenity .label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      font-size:.84rem;
+      font-weight:800;
+      margin-bottom:14px;
+    }
+    .amenity p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.65;
+    }
 
-.card:hover {
-  transform: translateY(-8px);
-}
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+    }
+    .photo{
+      position:relative;
+      overflow:hidden;
+      border-radius:28px;
+      min-height:290px;
+      background:
+        linear-gradient(180deg, rgba(3,6,21,.10), rgba(3,6,21,.46)),
+        linear-gradient(135deg, rgba(124,92,255,.26), rgba(255,155,61,.20));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow);
+    }
+    .photo::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-size:cover;
+      background-position:center;
+      transition:transform .45s ease;
+      transform:scale(1.01);
+      filter:saturate(1.08) contrast(1.03);
+    }
+    .photo:hover::before{transform:scale(1.06)}
+    .photo .tag{
+      position:absolute;
+      left:16px;
+      bottom:16px;
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(5,8,22,.62);
+      border:1px solid rgba(255,255,255,.14);
+      color:white;
+      font-size:.88rem;
+      font-weight:800;
+      backdrop-filter: blur(10px);
+    }
 
-/* REVIEWS */
-.review {
-  margin: 20px auto;
-  max-width: 400px;
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 15px;
-}
+    .photo.hero::before{background-image:url('hero-station.jpg')}
+    .photo.front::before{background-image:url('front-view.jpg')}
+    .photo.inside::before{background-image:url('inside-store.jpg')}
+    .photo.shelves::before{background-image:url('shelves.jpg')}
 
-/* MAP */
-.map {
-  margin-top: 30px;
-  border-radius: 20px;
-  overflow: hidden;
-}
+    .split{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+    .contact-box{
+      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:28px;
+      padding:26px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .contact-box h3{
+      margin:0 0 14px;
+      font-size:1.2rem;
+    }
+    .contact-row{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+    .contact-line{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      color:var(--muted);
+      line-height:1.65;
+    }
+    .contact-line strong{
+      color:var(--text);
+      min-width:86px;
+    }
 
-/* FOOTER */
-footer {
-  padding: 30px;
-  text-align: center;
-  background: black;
-  opacity: 0.7;
-}
+    .map-wrap{
+      border-radius:28px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow);
+      background:rgba(255,255,255,.04);
+      min-height:460px;
+    }
+    .map-wrap iframe{
+      width:100%;
+      height:100%;
+      min-height:460px;
+      border:0;
+      display:block;
+    }
 
-/* FLOAT BUTTON */
-.call-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: red;
-  padding: 15px;
-  border-radius: 50%;
-  color: white;
-  text-decoration: none;
-  font-size: 20px;
-}
-</style>
+    .why{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:18px;
+    }
+    .why .card{
+      min-height:184px;
+    }
+
+    .footer{
+      padding:32px 0 110px;
+      color:var(--muted);
+      text-align:center;
+      font-size:.95rem;
+    }
+    .footer a{
+      color:white;
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    .floating-call{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:56px;
+      height:56px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:white;
+      box-shadow:0 18px 45px rgba(255,91,87,.36);
+      z-index:60;
+      border:1px solid rgba(255,255,255,.16);
+    }
+
+    .floating-stack{
+      position:fixed;
+      left:18px;
+      bottom:18px;
+      z-index:60;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .floating-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:11px 14px;
+      border-radius:999px;
+      background:rgba(5,8,22,.74);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px);
+      color:white;
+      box-shadow:var(--shadow);
+      font-size:.88rem;
+      font-weight:800;
+      width:max-content;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(18px);
+      transition:opacity .75s ease, transform .75s ease;
+    }
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media (max-width: 1080px){
+      .hero-inner,
+      .split,
+      .grid.four,
+      .grid.three,
+      .amenities,
+      .gallery,
+      .why,
+      .highlight-strip{
+        grid-template-columns:1fr 1fr;
+      }
+      .grid.four{grid-template-columns:repeat(2,1fr)}
+      .grid.three{grid-template-columns:repeat(2,1fr)}
+      .amenities{grid-template-columns:repeat(2,1fr)}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+      .why{grid-template-columns:repeat(2,1fr)}
+      .hero{
+        padding-top:110px;
+      }
+      .hero h1{max-width:12ch}
+      .hero-badges{position:static;margin-top:18px}
+    }
+
+    @media (max-width: 760px){
+      .menu-btn{display:inline-flex}
+      .nav-links{
+        position:absolute;
+        top:76px;
+        left:16px;
+        right:16px;
+        display:none;
+        flex-direction:column;
+        gap:0;
+        background:rgba(3,6,21,.97);
+        border:1px solid rgba(255,255,255,.12);
+        border-radius:22px;
+        overflow:hidden;
+        box-shadow:var(--shadow);
+      }
+      .nav-links.open{display:flex}
+      .nav-links a{
+        width:100%;
+        padding:16px 18px;
+        border-bottom:1px solid rgba(255,255,255,.06);
+      }
+
+      .hero{
+        min-height:auto;
+        padding:112px 0 36px;
+      }
+      .hero-inner{
+        grid-template-columns:1fr;
+      }
+      .hero h1{
+        font-size:clamp(2.6rem, 13vw, 4rem);
+        max-width:none;
+      }
+      .hero-info-top,
+      .grid.four,
+      .grid.three,
+      .grid.two,
+      .amenities,
+      .gallery,
+      .why,
+      .highlight-strip{
+        grid-template-columns:1fr;
+      }
+      .photo,
+      .map-wrap,
+      .map-wrap iframe{
+        min-height:260px;
+      }
+      .floating-stack{
+        left:12px;
+        bottom:12px;
+      }
+      .floating-call{
+        right:12px;
+        bottom:12px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Marathon Gas Station home">
+        <div class="brand-mark" aria-hidden="true"><span>M</span></div>
+        <div class="brand-copy">
+          <strong>Marathon</strong>
+          <small>Gas Station</small>
+        </div>
+      </a>
 
-<header>
-  <h2>Marathon</h2>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#services">Services</a>
-    <a href="#products">Products</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
-<!-- HERO -->
-<section class="hero">
-  <div>
-    <h1>Modern Fuel. Clean Convenience.</h1>
-    <p>Fast, reliable service for fuel, snacks, and everyday needs in Grove City.</p>
-
-    <a href="tel:+15404670053" class="btn">Call Now</a>
-    <a href="https://maps.google.com/?q=4441+Broadway+Grove+City+OH" class="btn">Directions</a>
-
-    <div class="trust">
-      ✔ Clean & Safe • ✔ Fast Service • ✔ Easy Location
+      <nav class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#inside">Inside</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="reveal">
+          <span class="eyebrow">Convenience • Fuel • Quick Stop</span>
+          <h1>Modern Fuel. Clean Convenience.</h1>
+          <p class="lead">
+            A polished neighborhood stop with fast service, easy access, and a premium online presence designed to look impressive on day one.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="tel:+15404670053">Call Now</a>
+            <a class="btn secondary" href="#contact">Directions</a>
+          </div>
+
+          <ul class="hero-badges" aria-label="Store highlights">
+            <li>ATM Available</li>
+            <li>Lottery Tickets</li>
+            <li>Age-Restricted Counter</li>
+          </ul>
+        </div>
+
+        <aside class="hero-info reveal" aria-label="Business summary">
+          <div class="hero-info-top">
+            <div class="mini-card">
+              <span>Quick access</span>
+              <strong>Easy stop for drivers and locals</strong>
+            </div>
+            <div class="mini-card">
+              <span>Phone</span>
+              <strong>+1 (540) 467-0053</strong>
+            </div>
+            <div class="mini-card">
+              <span>Location</span>
+              <strong>4441 Broadway<br>Grove City, OH 43123</strong>
+            </div>
+            <div class="mini-card">
+              <span>Open for</span>
+              <strong>Fuel, snacks, drinks, and essentials</strong>
+            </div>
+          </div>
+          <p class="note">
+            Designed to feel premium on mobile and desktop, with strong visuals, quick contact access, and a clean layout that looks ready to publish.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Why this works</span>
+          <h2>A business-first website that feels expensive</h2>
+          <p>Built with strong spacing, clear buttons, cinematic imagery, and smooth interactions so it looks like a real service company website instead of a basic school project.</p>
+        </div>
+
+        <div class="highlight-strip">
+          <div class="highlight reveal">
+            <strong>Fast customer flow</strong>
+            Call, map, and store details are visible immediately.
+          </div>
+          <div class="highlight reveal">
+            <strong>Premium look</strong>
+            Glass cards, gradients, and soft lighting create a luxury feel.
+          </div>
+          <div class="highlight reveal">
+            <strong>Business-ready</strong>
+            Good for pitching, selling, and showing on a live browser.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Services</span>
+          <h2>Everything customers expect in one stop</h2>
+          <p>Include the full convenience-store experience while keeping the page elegant and easy to scan.</p>
+        </div>
+
+        <div class="grid four">
+          <article class="card reveal">
+            <div class="icon">⛽</div>
+            <h3>Fuel Station</h3>
+            <p>Quick and easy fuel stop for local drivers and travelers.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon">🛒</div>
+            <h3>Convenience Items</h3>
+            <p>Daily essentials, grab-and-go goods, and quick shopping needs.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon">☕</div>
+            <h3>Drinks & Coffee</h3>
+            <p>Hot drinks, cold drinks, and refreshment options throughout the day.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon">🎟️</div>
+            <h3>ATM & Lottery</h3>
+            <p>Convenient cash access and lottery ticket service in one location.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon">🍺</div>
+            <h3>Beer & Wine</h3>
+            <p>Age-restricted beverage selection where permitted by local rules.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon">🚬</div>
+            <h3>Tobacco & Vape Counter</h3>
+            <p>Age-restricted products displayed as a clean, organized store category.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon">💳</div>
+            <h3>Fast Checkout</h3>
+            <p>Easy counter service designed for speed and convenience.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon">📍</div>
+            <h3>Easy Access</h3>
+            <p>Clear directions, contact buttons, and map integration for customers.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="inside" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Inside the store</span>
+          <h2>Show the store like a real premium business</h2>
+          <p>These image cards use your own files and stay clean even when some photos are still being added later.</p>
+        </div>
+
+        <div class="amenities">
+          <div class="amenity reveal">
+            <div class="label">ATM</div>
+            <p>Easy cash access for customers on the go.</p>
+          </div>
+          <div class="amenity reveal">
+            <div class="label">Lottery</div>
+            <p>Ticket sales displayed in a neat, easy-to-find section.</p>
+          </div>
+          <div class="amenity reveal">
+            <div class="label">Beer & Wine</div>
+            <p>Store category included neatly for a full convenience-store presentation.</p>
+          </div>
+          <div class="amenity reveal">
+            <div class="label">Age-Restricted</div>
+            <p>Tobacco and vape products can be shown as an organized in-store department.</p>
+          </div>
+        </div>
+
+        <div class="gallery" style="margin-top:18px;">
+          <div class="photo front reveal">
+            <span class="tag">Front view</span>
+          </div>
+          <div class="photo inside reveal">
+            <span class="tag">Inside the store</span>
+          </div>
+          <div class="photo shelves reveal">
+            <span class="tag">Products and shelves</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Gallery</span>
+          <h2>Large visuals that make the site feel premium</h2>
+          <p>The hero image and gallery are built to look strong on a sales pitch, with no copied brand artwork.</p>
+        </div>
+
+        <div class="photo hero reveal" style="min-height:340px;border-radius:30px;">
+          <span class="tag">Hero station photo</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Customer confidence</span>
+          <h2>Why people choose this stop</h2>
+          <p>This section replaces fake claims with clear business value.</p>
+        </div>
+
+        <div class="why">
+          <article class="card reveal">
+            <div class="icon">✨</div>
+            <h3>Clean presentation</h3>
+            <p>Every section is spaced, styled, and easy to scan on a phone or desktop.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon">⚡</div>
+            <h3>Fast information</h3>
+            <p>Customers can see the address, call button, and map without hunting around.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon">🧭</div>
+            <h3>Easy directions</h3>
+            <p>One-click map access helps the store feel practical and ready for business.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section alt">
+      <div class="container split">
+        <div class="contact-box reveal">
+          <span class="eyebrow">Contact</span>
+          <h2 style="margin:14px 0 10px;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.04em;line-height:1.02;">Visit or call us</h2>
+
+          <div class="contact-row">
+            <div class="contact-line">
+              <strong>Address</strong>
+              <span>4441 Broadway, Grove City, OH 43123</span>
+            </div>
+            <div class="contact-line">
+              <strong>Phone</strong>
+              <span><a href="tel:+15404670053">+1 (540) 467-0053</a></span>
+            </div>
+            <div class="contact-line">
+              <strong>Note</strong>
+              <span>Open for fuel, snacks, drinks, ATM, lottery, and convenience items.</span>
+            </div>
+          </div>
+
+          <div class="hero-actions" style="margin-top:22px;">
+            <a class="btn primary" href="tel:+15404670053">Call Now</a>
+            <a class="btn secondary" href="https://www.google.com/maps/search/?api=1&query=4441+Broadway+Grove+City+OH+43123" target="_blank" rel="noopener">Open Maps</a>
+          </div>
+        </div>
+
+        <div class="map-wrap reveal" aria-label="Google map location">
+          <iframe
+            title="Marathon Gas Station Map"
+            src="https://www.google.com/maps?q=4441%20Broadway%2C%20Grove%20City%2C%20OH%2043123&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© <span id="year"></span> Marathon Gas Station. All rights reserved.</div>
+      <div style="margin-top:10px;">Premium website design with no copied logo and no owner names shown.</div>
+    </div>
+  </footer>
+
+  <a class="floating-call" href="tel:+15404670053" aria-label="Call now">📞</a>
+
+  <div class="floating-stack" aria-label="Quick store highlights">
+    <span class="floating-chip">ATM</span>
+    <span class="floating-chip">Lottery</span>
+    <span class="floating-chip">Beer • Wine • Tobacco</span>
   </div>
-</section>
 
-<!-- SERVICES -->
-<section id="services">
-  <h2>Our Services</h2>
-  <div class="cards">
-    <div class="card">Fuel Station</div>
-    <div class="card">Snacks & Drinks</div>
-    <div class="card">Quick Stop Convenience</div>
-    <div class="card">Fast Checkout</div>
-  </div>
-</section>
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    const year = document.getElementById('year');
+    const revealItems = document.querySelectorAll('.reveal');
+    const navAnchors = document.querySelectorAll('.nav-links a');
 
-<!-- PRODUCTS -->
-<section id="products">
-  <h2>Popular Items</h2>
-  <div class="cards">
-    <div class="card">Cold Drinks</div>
-    <div class="card">Coffee</div>
-    <div class="card">Snacks</div>
-    <div class="card">Daily Essentials</div>
-  </div>
-</section>
+    year.textContent = new Date().getFullYear();
 
-<!-- REVIEWS -->
-<section>
-  <h2>Customer Reviews</h2>
-  <div class="review">"Very clean and quick service!" ⭐⭐⭐⭐⭐</div>
-  <div class="review">"Best stop in Grove City!" ⭐⭐⭐⭐⭐</div>
-  <div class="review">"Friendly and fast checkout." ⭐⭐⭐⭐⭐</div>
-</section>
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.textContent = open ? '✕' : '☰';
+    });
 
-<!-- CONTACT -->
-<section id="contact">
-  <h2>Visit Us</h2>
-  <p>4441 Broadway, Grove City, OH 43123</p>
-  <p><a href="tel:+15404670053" style="color:orange;">+1 (540) 467-0053</a></p>
+    navAnchors.forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.textContent = '☰';
+      });
+    });
 
-  <div class="map">
-    <iframe
-      src="https://www.google.com/maps?q=4441+Broadway+Grove+City+OH&output=embed"
-      width="100%" height="300" style="border:0;"></iframe>
-  </div>
-</section>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-<footer>
-  © 2026 Marathon Gas Station — All rights reserved
-</footer>
+    revealItems.forEach(el => observer.observe(el));
 
-<a href="tel:+15404670053" class="call-btn">📞</a>
-
+    const sections = document.querySelectorAll('main section[id]');
+    window.addEventListener('scroll', () => {
+      const pos = window.scrollY + 150;
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const bottom = top + section.offsetHeight;
+        const id = section.id;
+        const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+        if (!link) return;
+        if (pos >= top && pos < bottom) {
+          navAnchors.forEach(x => x.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
